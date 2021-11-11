@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>    
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    
+    <script type="text/javascript" src="main.js"></script>
+    <script src="p5.js"></script>
+    <script>
+        var foc;
+        function insert(num) 
+        {
+           document.getElementById(foc).value += num;
+
+        }
+        function clr()
+        {
+            document.getElementById(foc).value = '';
+        }
+        function del()
+        {   var value = document.getElementById(foc).value;
+            document.getElementById(foc).value = value.substr(0, value.length - 1);
+        }
+        function SorUs(val){
+                if(val){
+                opt = document.getElementById("Symm").value;
+                if(val.value==opt)
+                {
+                    document.getElementById("sym").style.display="block";
+                    document.getElementById("Usym").style.display="none";
+
+                }
+                else{
+                    document.getElementById("Usym").style.display="block";
+                    document.getElementById("sym").style.display="none";
+
+                }}
+            
+
+        }
+        
+    </script>
+    
+    <title>Calculator</title>
+
+
+</head>
+<body>
+    
+    <header>
+        
+        <h1 style="color:white;font-family: monospace;text-align: center;border-bottom:5px double rgb(238, 236, 236)">TRANSMISSION AND DISTRIBUTION SYSTEMS</h1>
+        <ul class="nav">
+        <li><a class="active" href="#home">Home</a></li>
+        <li><a href="formulas.html">Formulas</a></li>
+        <li><a href="team.html">Team</a></li>
+        <li><a href="https://github.com/tdprojectgroup/tdprojectgroup.github.io">Source Files</a></li>
+        </ul>
+        
+    </header>
+    
+    <div class="input">
+        
+        <div class="content">
+            
+            <ol style="font-size: larger;font-weight: bold;margin-left: 10px;" type="I">
+                  
+                <li>
+                    <h3>TYPE OF SYSTEM:
+                    <select id="select-value-1" name="TYPE OF SYSTEM" class="box" onchange="SorUs(this)" >
+                        <option value="Symm" id="Symm">Symmetrical spacing</option>
+                        <option id="UnSym" value="UnSymm" >UnSymmetrical spacing</option>
+                    </select>
+                    </h3>
+                </li>
+                <li id="Usym" style="display: none;"><h3>SPACING BETWEEN THE PHASE CONDUCTORS:<select id="select-units-unsymm" name="units" class="box">
+                    <option value="m">in m</option>
+                    <option value="mm">in mm</option>
+                    <option value="ft">in ft</option>
+                    <option value="inch">in inch</option>
+                    </select></h3>
+                    <ul>
+                        <li><h3>D<sub>ab</sub>:<input id="Dab" type="text" class="ip" type="text" name="numInp" onfocus='foc="Dab"' step="0.01"></h3></li>
+                        <li><h3>D<sub>bc</sub>:<input id="Dbc" type="text" class="ip" type="text" name="numInp" onfocus='foc="Dbc"' step="0.01"></h3></li>
+                        <li><h3>D<sub>ca</sub>:<input id="Dca" type="text" class="ip" type="text" name="numInp" onfocus='foc="Dca"' step="0.01"></h3></li>
+                    </ul>
+                </li>
+                <li id="sym">
+                    <h3>SPACING BETWEEN THE PHASE CONDUCTORS:
+                        <input id="Deq" class="ip" type="text" name="numInp" onfocus='foc="input-value-2"' step="0.01"> 
+                        <select id="select-units-symm" name="units" class="box">
+                            <option value="m">in m</option>
+                            <option value="mm">in mm</option>
+                            <option value="ft">in ft</option>
+                            <option value="inch">in inch</option>
+                        </select>
+                    </h3>
+                </li>
+                <li>
+                    <h3>NUMBER OF SUBCONDUCTORS PER BUNDLE:<input id="input-value-3" class="ip" type="text" name="n_subs" onfocus='foc="input-value-3"' step="0.01"></h3>
+                </li>
+                <li>
+                    <h3>SPACING BETWEEN THE SUBCONDUCTORS:<input id="input-value-4" class="ip" type="text" name="numInp" onfocus='foc="input-value-4"' step="0.01"> 
+                        <select id="select-units-4" name="units" class="box">
+                            <option value="m">in m</option>
+                            <option value="mm">in mm</option>
+                            <option value="ft">in ft</option>
+                            <option value="inch">in inch</option>
+                        </select> 
+                    </h3>
+                </li>
+                <li>
+                    <h3>NUMBER OF STRANDS IN EACH SUBCONDUCTOR: <input id="input-value-5" class="ip" type="text" onfocus='foc="input-value-5"' name="n_strands"></h3>
+                </li>
+                <li>
+                    <h3>DIAMETER OF EACH STRAND: <input id="input-value-6" class="ip" type="text" name="dia_strand" onfocus='foc="input-value-6"' step="0.01">
+                        <select id="select-units-6" name="units" class="box">
+                            <option value="m">in m</option>
+                            <option value="mm">in mm</option>
+                            <option value="ft">in ft</option>
+                            <option value="inch">in inch</option>
+                        </select>
+                    </h3>
+                </li>
+            
+                <li>
+                    <h3>LENGTH OF THE LINE IN KM : <input id="input-value-7" class="ip" type="text" name="len_line" onfocus='foc="input-value-7"' step="0.01"></h3>
+                </li>
+                <li>
+                    <h3>MODEL OF THE LINE:
+                        <select id="select-value-8" name="model_type" class="box">
+                            <option value="s">Short</option>
+                            <option value="n">Nominal PI</option>
+                            <option value="l">Long</option>
+                        </select>
+                    </h3>
+                </li>
+                <li>
+                    <h3>RESISTANCE OF THE LINE PER KM : <input id="input-value-9" class="ip" type="text" name="dia_strand" onfocus='foc="input-value-9"'step="0.01"></h3>
+                </li> 
+                <li>
+                    <h3>POWER FREQUENCY : <input id="input-value-10" class="ip" type="text" name="freq" onfocus='foc="input-value-10"' step="0.01"></h3>
+                </li> 
+                <li>
+                    <h3>NOMINAL SYSTEM VOLTAGE IN V : <input id="input-value-11" class="ip" type="text" name="sys_voltge" onfocus='foc="input-value-11"' step="0.01"></h3>
+                </li>
+                <li>
+                    <h3>RECEIVING END LOAD IN MW : <input id="input-value-12" class="ip" type="text" name="load" onfocus='foc="input-value-12"' step="0.01"></h3>
+                </li>
+                <li>
+                    <h3>POWER FACTOR OF RECEIVING END LOAD: <input id="input-value-13" class="ip" type="text" name="load_pf" onfocus='foc="input-value-13"' step="0.001"></h3>
+                </li>
+            </ol>
+
+            <div class="center"><button class="calculate" onclick="submit()">CALCULATE</button></div>
+        </div>
+        
+        <div class="container">
+            <div id="calculator">
+                <div id="keyboard">
+                <form name="calci">    
+                    <input type="button" class="operator" value="C" onclick="clr()"></input>
+                    <input type="button" class="operator" value="del" onclick="del()"></input>
+                    <input type="button" class="operator" value="x10^" onclick="insert('x10^')"></input>
+                    <input type="button" class="number" value="7" onclick="insert('7')"></input>
+                    <input type="button" class="number" value="8" onclick="insert('8')"></input>
+                    <input type="button" class="number" value="9" onclick="insert('9')"></input>
+                    <input type="button" class="number" value="4" onclick="insert('4')" ></input>
+                    <input type="button" class="number" value="5" onclick="insert('5')" ></input>
+                    <input type="button" class="number" value="6" onclick="insert('6')" ></input>
+                    <input type="button" class="number" value="1" onclick="insert('1')"></input>
+                    <input type="button" class="number" value="2" onclick="insert('2')"></input>
+                    <input type="button" class="number" value="3" onclick="insert('3')"></input>
+                    <input type="button" class="operator" value="." onclick="insert('.')"></input>
+                    <input type="button" class="number" value="0" onclick="insert('0')"></input>
+                    <input type="button" class="operator" value="-" onclick="insert('-')"></input>
+                </form>    
+                </div>
+            </div>
+        </div>    
+        
+    </div>
+    <div id="output-div" class = "output">
+        <div class = "content2">
+        <ol style="font-size: larger;font-weight: bold;margin-left: 30px;" type="I">
+           
+            <li>
+                <h3>INDUCTANCE PER PHASE PER KM =
+                    <input id="inductance" disabled="true" type="text" class="ip" name="L">
+                </h3>
+            </li>
+            <li>
+                <h3>CAPACITANCE PER PHASE PER KM =
+                    <input id="capacitance" disabled="true" type="text" class="ip" name="C"> 
+                    
+                </h3>
+            </li>
+            <li>
+                <h3>INDUCTIVE REACTANCE OF LINE =<input id="inductive-reactance" disabled="true" type="text" class="ip" name="xl"></h3>
+            </li>
+            <li>
+                <h3>CAPACITIVE REACTANCE OF LINE =<input id="capacitive-reactance" disabled="true" type="text" class="ip" name="xc"></h3>
+            </li>
+            <li>
+                <h3>CHARGING CURRENT DRAWN FROM SENDING SUBSTATION = <input id="charging-current" disabled="true" type="text" class="ip" name="icharge_s" ></h3>
+            </li>
+            <li>
+                <h3>ABCD PARAMETERS OF THE LINE:
+                   <ol type="i">
+                       <li><h3>A = <input id="A" disabled="true" type="text" class="ip" name="A"></h3></li>
+                       <li><h3>B = <input id="B" disabled="true" type="text" class="ip" name="B" ></h3></li>
+                       <li><h3>C = <input id="C" disabled="true" type="text" class="ip" name="C" ></h3></li>
+                       <li><h3>D = <input id="D" disabled="true" type="text" class="ip" name="D" ></h3></li>
+                   </ol> 
+                    
+                </h3>
+            </li>
+        
+            <li>
+                <h3>SENDING END VOLTAGE IN kV(AT NOMINAL VOLTAGE) = <input id="sending-end-voltage" disabled="true" type="text" class="ip" name="vnomi_s"></h3>
+            </li>
+            <li>
+                <h3>SENDING END CURRENT =
+                    <input id="sending-end-current" id="sending-end-current" disabled="true"  type="text" class="ip" name="i_s">
+                </h3>
+            </li>
+            <li>
+                <h3>% VOLTAGE REGULATION = <input id="voltage-regulation" disabled="true" type="text" class="ip" name="dia_strand"></h3>
+            </li> 
+            <li>
+                <h3>POWER LOSS IN THE LINE = <input id="power-loss" disabled="true" type="text" class="ip" name="loss"></h3>
+            </li> 
+            <li>
+                <h3>% TRANSMISSION EFFICIENCY = <input id="efficiency" disabled="true" type="text" class="ip" name="trns_eff"></h3>
+            </li>
+        </ol>
+        <div id="download-div" class="center"><button id="download-button" class="calculate">SAVE OUTPUT TEXT</button></div>
+        </div>
+
+        <div id="circle-diagram">
+            <div class="center"><h1>CIRCLE DIAGRAMS</h1></div>
+            <div id="canvas-container" class="center"></div>
+            <div id="download-circle-diagram-div" class="center"><button id="download-circle-diagram-button" class="calculate" onclick="saveCircleDiagram()">SAVE CIRCLE DIAGRAMS</button></div>
+        </div>
+    </div>
+            
+</body>
+</html>
