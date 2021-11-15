@@ -17,7 +17,7 @@ function getInitialLambda(powerDemand, D, coeffs, limits) {
 
 function economicLoadDispatch(powerDemand, D, coeffs, limits) {
     let lambda = getInitialLambda(powerDemand, D, coeffs, limits);
-    let eps = 0.01;
+    let eps = 0.001;
     let dP = Infinity;
     let optimalUnits = Array(D).fill(0);
     const maxItrCount = 100;
@@ -47,8 +47,10 @@ function economicLoadDispatch(powerDemand, D, coeffs, limits) {
         console.log(`Iteration ${itrCount}: ${optimalUnits}`);
         ++itrCount;
 
-        if (itrCount > maxItrCount)
+        if (itrCount > maxItrCount) {
             console.error("Maximum iterations occured");
+            break;
+        }
     }
 
     return optimalUnits;
@@ -70,6 +72,35 @@ function calculateCost(D, coeffs, limits, generationUnits) {
     return res;
 }
 
+function submit() {
+    console.log("Hello in submit");
+    input = getInput();
+    validatedInput = validateInput(input);
+    console.log(validatedInput);
+    resetOutput();
+
+    if (validatedInput['valid']) {
+        console.log(input)
+        let powerDemand = input['powerDemand'];
+        let D = input['numberGenerators'];
+        let coeffs = input['coeffs'];
+        let limits = input['limits'];
+        unitsOptimal = economicLoadDispatch(powerDemand, D, coeffs, limits);
+        console.log(unitsOptimal);
+        costDetailsOptimal = calculateCost(D, coeffs, limits, unitsOptimal);
+        console.log(costDetailsOptimal);
+        let unitsEqual = Array(D).fill(powerDemand/D);
+        costDetailsEqual = calculateCost(D, coeffs, limits, unitsEqual);
+        console.log(costDetailsEqual);
+
+        output = {'unitsOptimal':unitsOptimal, 'costDetailsOptimal': costDetailsOptimal, 'costDetailsEqual': costDetailsEqual};
+        showOutput(output);
+    } else {
+        console.error(validatedInput['errors']);
+        showErrorList(validatedInput['errors']);
+    }
+}
+
 function updateNumberOfGenerators() {
     console.log("In updateNumberOfGenerators");
     let numberGenerators = document.getElementById('number-generators-input').value;
@@ -83,8 +114,10 @@ function updateNumberOfGenerators() {
     console.log(numberGenerators);
     if (!valid) {
         console.error(errors);
+        showErrorList(errors);
         return;
     }
+    hideErrorList();
     updateInputTable(numberGenerators);
 }
 
@@ -124,31 +157,6 @@ function updateInputTable(numberGenerators) {
         }
         inputTableBodyElement.appendChild(tr);
     }
-}
-
-function getInput() {
-    let powerDemand = document.getElementById('power-demand-input').value;
-    // let numberGenerators = document.getElementById('number-generators-input').value;
-    console.log(powerDemand, numberGeneratorsGlobal);
-    let limits = [];
-    let coeffs = [];
-    for (let i=0; i<numberGeneratorsGlobal; ++i) {
-        let minLimit = document.getElementById(`gen-${i+1}-min`).value;
-        let maxLimit = document.getElementById(`gen-${i+1}-max`).value;
-
-        let coeff1 = document.getElementById(`gen-${i+1}-coeff-1`).value;
-        let coeff2 = document.getElementById(`gen-${i+1}-coeff-2`).value;
-        let coeff3 = document.getElementById(`gen-${i+1}-coeff-3`).value;
-
-        limits.push([minLimit, maxLimit]);
-        coeffs.push([coeff1, coeff2, coeff3]);
-    }
-    return {
-        'powerDemand': powerDemand,
-        'numberGenerators': numberGeneratorsGlobal,
-        'limits': limits,
-        'coeffs': coeffs
-    };
 }
 
 function validateInput(input) {
@@ -210,16 +218,45 @@ function validateInput(input) {
     return input;
 }
 
+function getInput() {
+    let powerDemand = document.getElementById('power-demand-input').value;
+    // let numberGenerators = document.getElementById('number-generators-input').value;
+    console.log(powerDemand, numberGeneratorsGlobal);
+    let limits = [];
+    let coeffs = [];
+    for (let i=0; i<numberGeneratorsGlobal; ++i) {
+        let minLimit = document.getElementById(`gen-${i+1}-min`).value;
+        let maxLimit = document.getElementById(`gen-${i+1}-max`).value;
+
+        let coeff1 = document.getElementById(`gen-${i+1}-coeff-1`).value;
+        let coeff2 = document.getElementById(`gen-${i+1}-coeff-2`).value;
+        let coeff3 = document.getElementById(`gen-${i+1}-coeff-3`).value;
+
+        limits.push([minLimit, maxLimit]);
+        coeffs.push([coeff1, coeff2, coeff3]);
+    }
+    return {
+        'powerDemand': powerDemand,
+        'numberGenerators': numberGeneratorsGlobal,
+        'limits': limits,
+        'coeffs': coeffs
+    };
+}
+
 function showOutput(output) {
     let outputTableElement = document.getElementById('output-table');
     outputTableElement.style.visibility = 'visible';
     let outputTableBodyElement = document.getElementById('output-table-body');
     outputTableBodyElement.innerHTML = '';
+    let outputTableFootElement = document.getElementById('output-table-foot');
+    outputTableFootElement.innerHTML = '';
+
     let unitsOptimal = output['unitsOptimal'];
     let costDetailsOptimal = output['costDetailsOptimal'];
     let costsOptimal = costDetailsOptimal['costs'];
     let costDetailsEqual = output['costDetailsEqual'];
     let costsEqual = costDetailsEqual['costs'];
+
     for (let i=0; i<numberGeneratorsGlobal; ++i) {
         let tr = document.createElement('tr');
         let th = document.createElement('th');
@@ -244,6 +281,43 @@ function showOutput(output) {
 
         outputTableBodyElement.appendChild(tr);
     }
+
+    let tr = document.createElement('tr');
+    tr.className = "bg-info";
+
+    let th = document.createElement('th');
+    th.scope = 'row';
+    th.textContent = "Sum";
+    tr.appendChild(th);
+
+    let td1 = document.createElement('td');
+    tr.appendChild(td1);
+
+    let costOptimalTotal = costDetailsOptimal['totalCost'];
+    let td2 = document.createElement('td');
+    td2.textContent = roundValueToPDecimals(costOptimalTotal, 3);
+    tr.appendChild(td2);
+
+    let costEqualTotal = costDetailsEqual['totalCost'];
+    let td3 = document.createElement('td');
+    td3.textContent = roundValueToPDecimals(costEqualTotal, 3);
+    tr.appendChild(td3);
+
+    outputTableFootElement.appendChild(tr);
+}
+
+function resetOutput() {
+    document.getElementById('output-table').style.visibilty = 'hidden';
+    hideErrorList();
+}
+
+function reset() {
+    console.log("In reset");
+    numberGeneratorsGlobal = 3;
+    document.getElementById('number-generators-input').value = '';
+    document.getElementById('power-demand-input').value = '';
+    updateInputTable(numberGeneratorsGlobal);
+    resetOutput();
 }
 
 function resetJSVariables() {
@@ -253,30 +327,22 @@ function resetJSVariables() {
     limits = [[0, Infinity], [0, Infinity]];
 }
 
-function submit() {
-    console.log("Hello in submit");
-    input = getInput();
-    validatedInput = validateInput(input);
-    console.log(validatedInput);
-    if (validatedInput['valid']) {
-        console.log(input)
-        let powerDemand = input['powerDemand'];
-        let D = input['numberGenerators'];
-        let coeffs = input['coeffs'];
-        let limits = input['limits'];
-        unitsOptimal = economicLoadDispatch(powerDemand, D, coeffs, limits);
-        console.log(unitsOptimal);
-        costDetailsOptimal = calculateCost(D, coeffs, limits, unitsOptimal);
-        console.log(costDetailsOptimal);
-        let unitsEqual = Array(D).fill(powerDemand/D);
-        costDetailsEqual = calculateCost(D, coeffs, limits, unitsEqual);
-        console.log(costDetailsEqual);
-
-        output = {'unitsOptimal':unitsOptimal, 'costDetailsOptimal': costDetailsOptimal, 'costDetailsEqual': costDetailsEqual};
-        showOutput(output);
-    } else {
-        console.error(validatedInput['errors']);
+function showErrorList(errors) {
+    let errorListDiv = document.getElementById('error-list-div');
+    errorListDiv.style.display = 'block';
+    let errorListElement = document.getElementById('error-list');
+    errorListElement.innerHTML = '';
+    for (let i=0; i<errors.length; ++i) {
+        let li = document.createElement('li');
+        li.className = "list-group-item list-group-item-danger";
+        li.textContent = errors[i];
+        errorListElement.appendChild(li);
     }
+}
+
+function hideErrorList() {
+    let errorListDiv = document.getElementById('error-list-div');
+    errorListDiv.style.display = 'none';
 }
 
 window.onload = () => {
