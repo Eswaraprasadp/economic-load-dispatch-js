@@ -1,4 +1,4 @@
-function getInitialLambda() {
+function getInitialLambda(powerDemand, D, coeffs, limits) {
     let denominator = 0;
     for (let i=0; i<D; ++i) {
         let a = coeffs[i][0], b = coeffs[i][1], c = coeffs[i][2];
@@ -48,11 +48,34 @@ function economicLoadDispatch(powerDemand, D, coeffs, limits) {
 }
 
 function getInput() {
-    return;
+    let powerDemand = document.getElementById('power-demand-input').value;
+    let numberGenerators = document.getElementById('number-generators-input').value;
+    console.log(powerDemand, numberGenerators)
+    return {
+        'powerDemand': powerDemand,
+        'numberGenerators': numberGenerators,
+    };
 }
 
 function validateInput(input) {
-    return true;
+    let powerDemand = Number(input['powerDemand']);
+    let numberGenerators = Number(input['numberGenerators']);
+    let errors = [];
+    if (!powerDemand)
+        errors.push('Invalid input for Power demand');
+    if (!numberGenerators)
+        errors.push('Invalid input for Number of generators');
+    if (!Number.isInteger(powerDemand))
+        errors.push('Number of generators should be an integer');
+    if (powerDemand < 0)
+        errors.push('Power demand should be >= 0');
+    if (numberGenerators <= 0)
+        errors.push('Number of generators should be > 0');
+    input['powerDemand'] = powerDemand;
+    input['numberGenerators'] = numberGenerators;
+    input['errors'] = errors;
+    input['valid'] = (errors.length==0 ? true:false);
+    return input;
 }
 
 function showOutput(output) {
@@ -67,12 +90,20 @@ function resetJSVariables() {
 }
 
 function submit() {
+    console.log("Hello in submit");
     input = getInput();
-    if (validateInput(input)) {
+    validatedInput = validateInput(input);
+    console.log(validatedInput);
+    if (validatedInput['valid']) {
+        console.log(input)
         let powerDemand = input['powerDemand'];
-        let D = input['D'];
+        let D = input['numberGenerators'];
         let coeffs = input['coeffs'];
         let limits = input['limits'];
         res = economicLoadDispatch(powerDemand, D, coeffs, limits);
     }
+}
+
+window.onload = () => {
+    console.log("Hello JS");
 }

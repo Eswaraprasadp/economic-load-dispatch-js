@@ -1,194 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <link rel="stylesheet" href="styles.css">
-    <meta charset="UTF-8">
+    <head>
+        <title>Calculator</title>
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+        <script type="text/javascript" src="main.js"></script>
+    </head>
 
-    <script type="text/javascript" src="main.js"></script>
-    <script src="p5.js"></script>
-    <script>
-        var foc;
-        function insert(num)
-        {
-           document.getElementById(foc).value += num;
-
-        }
-        function clr()
-        {
-            document.getElementById(foc).value = '';
-        }
-        function del()
-        {   var value = document.getElementById(foc).value;
-            document.getElementById(foc).value = value.substr(0, value.length - 1);
-        }
-        function SorUs(val){
-                if(val){
-                opt = document.getElementById("Symm").value;
-                if(val.value==opt)
-                {
-                    document.getElementById("sym").style.display="block";
-                    document.getElementById("Usym").style.display="none";
-
-                }
-                else{
-                    document.getElementById("Usym").style.display="block";
-                    document.getElementById("sym").style.display="none";
-
-                }}
-
-
-        }
-
-    </script>
-
-    <title>Calculator</title>
-
-
-</head>
-<body>
-
-    <header>
-
-        <h1 style="color:white;font-family: monospace;text-align: center;border-bottom:5px double rgb(238, 236, 236)">POWER SYSTEM ECONOMICS AND CONTROL</h1>
-        <ul class="nav">
-        <li><a class="active" href="#home">Home</a></li>
-        <li><a href="formulas.html">Formulas</a></li>
-        <li><a href="team.html">Team</a></li>
-        <li><a href="https://github.com/Eswaraprasadp/economic-load-dispatch-js">Source Files</a></li>
-        </ul>
-
-    </header>
-
-    <div class="input">
-
-        <div class="content">
-
-            <ol style="font-size: larger;font-weight: bold;margin-left: 10px;" type="I">
-
-                <li>
-                    <h3>POWER DEMAND OF AREA: <input id="input-value-4" class="ip" type="text" name="Pd" onfocus='foc="input-value-4"'></h3>
-                </li>
-                <li>
-                    <h3>NUMBER OF GENERATORS: <input id="input-value-5" class="ip" type="text" onfocus='foc="input-value-5"' name="n_gens"></h3>
-              </li>
-                <h2>GENERATOR 1</h2>
-                    <ol>MINIMUM LIMIT OF GENERATOR 1:             <input id="input-value-6" class="ip" type="text" name="GEN_1_MIN" onfocus='foc="input-value-6"'></ol>
-                    <ol>MAXIMUM LIMIT OF GENERATOR 1:             <input id="input-value-6" class="ip" type="text" name="GEN_1_MAX" onfocus='foc="input-value-6"'></ol>
-                    <ol>CONSTANT COEFFICIENT OF GENERATOR 1 (a):  <input id="input-value-6" class="ip" type="text" name="GEN_1_a" onfocus='foc="input-value-6"'></ol>
-                    <ol>LINEAR COEFFICIENT OF GENERATOR 1 (b):    <input id="input-value-6" class="ip" type="text" name="GEN_1_b" onfocus='foc="input-value-6"'></ol>
-                    <ol>QUADRATIC COEFFICIENT OF GENERATOR 1 (c): <input id="input-value-6" class="ip" type="text" name="GEN_1_c" onfocus='foc="input-value-6"'></ol>
-
-               <h2>GENERATOR 1</h2>
-                    <ol>MINIMUM LIMIT OF GENERATOR 2:             <input id="input-value-6" class="ip" type="text" name="GEN_2_MIN" onfocus='foc="input-value-6"'></ol>
-                    <ol>MAXIMUM LIMIT OF GENERATOR 2:             <input id="input-value-6" class="ip" type="text" name="GEN_2_MAX" onfocus='foc="input-value-6"'></ol>
-                    <ol>CONSTANT COEFFICIENT OF GENERATOR 2 (a):  <input id="input-value-6" class="ip" type="text" name="GEN_2_a" onfocus='foc="input-value-6"'></ol>
-                    <ol>LINEAR COEFFICIENT OF GENERATOR 2 (b):    <input id="input-value-6" class="ip" type="text" name="GEN_2_b" onfocus='foc="input-value-6"'></ol>
-                    <ol>QUADRATIC COEFFICIENT OF GENERATOR 2 (c): <input id="input-value-6" class="ip" type="text" name="GEN_2_c" onfocus='foc="input-value-6"'></ol>
-
-              <h2>GENERATOR 1</h2>
-                    <ol>MINIMUM LIMIT OF GENERATOR 3:             <input id="input-value-6" class="ip" type="text" name="GEN_3_MIN" onfocus='foc="input-value-6"'></ol>
-                    <ol>MAXIMUM LIMIT OF GENERATOR 3:             <input id="input-value-6" class="ip" type="text" name="GEN_3_MAX" onfocus='foc="input-value-6"'></ol>
-                    <ol>CONSTANT COEFFICIENT OF GENERATOR 3 (a):  <input id="input-value-6" class="ip" type="text" name="GEN_3_a" onfocus='foc="input-value-6"'></ol>
-                    <ol>LINEAR COEFFICIENT OF GENERATOR 3 (b):    <input id="input-value-6" class="ip" type="text" name="GEN_3_b" onfocus='foc="input-value-6"'></ol>
-                    <ol>QUADRATIC COEFFICIENT OF GENERATOR 3 (c): <input id="input-value-6" class="ip" type="text" name="GEN_3_c" onfocus='foc="input-value-6"'></ol>
-          </ol>
-          <table border="4px" width="850px">
-            <tr>
-              <td>GENERATOR</td>
-              <td>CONSTANT COEFFICIENT (a)</td>
-              <td>LINEAR COEFFICIENT (b)</td>
-              <td>QUADRATIC COEFFICIENT (c)</td>
-            </tr>
-
-            <tr>
-              <td>1</td>
-              <td> </td>
-              <td> </td>
-              <td> </td>
-            </tr>
-
-            <tr>
-              <td>2</td>
-              <td> </td>
-              <td> </td>
-              <td> </td>
-            </tr>
-
-            <tr>
-              <td>3</td>
-              <td> </td>
-              <td> </td>
-              <td> </td>
-            </tr>
-        </table>
-
-            <div class="center"><button class="calculate" onclick="submit()">CALCULATE</button></div>
+    <body align=center>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4"><legend><h1>ECONOMIC DISPATCH</h1></legend></div>
         </div>
+        <br>
 
-        <div class="container">
-            <div id="calculator">
-                <div id="keyboard">
-                <form name="calci">
-                    <input type="button" class="operator" value="C" onclick="clr()"></input>
-                    <input type="button" class="operator" value="del" onclick="del()"></input>
-                    <input type="button" class="operator" value="x10^" onclick="insert('x10^')"></input>
-                    <input type="button" class="number" value="7" onclick="insert('7')"></input>
-                    <input type="button" class="number" value="8" onclick="insert('8')"></input>
-                    <input type="button" class="number" value="9" onclick="insert('9')"></input>
-                    <input type="button" class="number" value="4" onclick="insert('4')" ></input>
-                    <input type="button" class="number" value="5" onclick="insert('5')" ></input>
-                    <input type="button" class="number" value="6" onclick="insert('6')" ></input>
-                    <input type="button" class="number" value="1" onclick="insert('1')"></input>
-                    <input type="button" class="number" value="2" onclick="insert('2')"></input>
-                    <input type="button" class="number" value="3" onclick="insert('3')"></input>
-                    <input type="button" class="operator" value="." onclick="insert('.')"></input>
-                    <input type="button" class="number" value="0" onclick="insert('0')"></input>
-                    <input type="button" class="operator" value="-" onclick="insert('-')"></input>
-                </form>
+        <div class="col-md-8 col-md-offset-2">
+            <div class="form-group">
+                <label class="control-label col-md-3 col-md-offset-2" for="powerDemand">Power demand:</label>
+                <div class="col-md-4 input-group">
+                    <input id="power-demand-input" type="number" min="0" step="any" class="form-control" name="var_1" placeholder="&nbsp;0&nbsp;">
+                    <div class="input-group-btn" style="visibility: hidden;">
+                        <button class="btn btn-primary" type="button">Update</button>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-3 col-md-offset-2" for="numberGenerators">Number of generators:</label>
+                <div class="col-md-4 input-group">
+                    <input id="number-generators-input" type="number" min="0" class="form-control" name="var_2" placeholder="&nbsp;0&nbsp;">
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary" type="button">Update</button>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <table id="input-coeffs-table" class="table" style="margin-top: 30px;">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Min Limit</th>
+                            <th scope="col">Max Limit</th>
+                            <th scope="col">Constant coefficient (a)</th>
+                            <th scope="col">Linear coefficient (b)</th>
+                            <th scope="col">Quadratic coefficient (c)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td><input type="number" step="any" placeholder="10" class="form-control"></td>
+                            <td><input type="number" step="any" placeholder="100" class="form-control"></td>
+                            <td><input type="number" step="any" placeholder="20" class="form-control"></td>
+                            <td><input type="number" step="any" placeholder="3" class="form-control"></td>
+                            <td><input type="number" step="any" placeholder="0.001" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td><input type="number" step="any" placeholder="10" class="form-control"></td>
+                            <td><input type="number" step="any" placeholder="100" class="form-control"></td>
+                            <td><input type="number" step="any" placeholder="20" class="form-control"></td>
+                            <td><input type="number" step="any" placeholder="3" class="form-control"></td>
+                            <td><input type="number" step="any" placeholder="0.001" class="form-control"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td><input type="number" step="any" placeholder="10" class="form-control"></td>
+                            <td><input type="number" step="any" placeholder="100" class="form-control"></td>
+                            <td><input type="number" step="any" placeholder="20" class="form-control"></td>
+                            <td><input type="number" step="any" placeholder="3" class="form-control"></td>
+                            <td><input type="number" step="any" placeholder="0.001" class="form-control"></td>
+                        </tr>
+                    </tbody>
+                </table>                        
+            </div>
+
+             <div class="form-group">
+                <div class="col-xs-8 col-xs-offset-2">
+                    <input type="button" onclick="submit()" class="btn btn-success" value="Submit">
+                    <input type="button" class="btn btn-danger" value="Reset">
                 </div>
             </div>
         </div>
 
-    </div>
-    <div id="output-div" class = "output">
-        <div class = "content2">
-        <ol style="font-size: larger;font-weight: bold;margin-left: 30px;" type="I">
-
-            <li>
-                <h3>POWER SUPPLIED BY GENERATOR 1 =
-                    <input id="PG" disabled="true" type="text" class="ip" name="PG1">
-                </h3>
-            </li>
-            <li>
-                <h3>OPERATION COST OF GENERATOR 1 =
-                    <input id="OPC" disabled="true" type="text" class="ip" name="C1">
-                </h3>
-            </li>
-            <li>
-                <h3>POWER SUPPLIED BY GENERATOR 2 =
-                    <input id="PG" disabled="true" type="text" class="ip" name="PG2">
-                </h3>
-            </li>
-            <li>
-                <h3>OPERATION COST OF GENERATOR 2 =
-                    <input id="OPC" disabled="true" type="text" class="ip" name="C2">
-                </h3>
-            </li>
-            <li>
-                <h3>POWER SUPPLIED BY GENERATOR 3 =
-                    <input id="PG" disabled="true" type="text" class="ip" name="PG3">
-                </h3>
-            </li>
-            <li>
-                <h3>OPERATION COST OF GENERATOR 3 =
-                    <input id="OPC" disabled="true" type="text" class="ip" name="C3">
-                </h3>
-            </li>
-            <li>
-                <h3>TOTAL OPERATION COST =
-                    <input id="OPC" disabled="true" type="text" class="ip" name="TC">
-                </h3>
-            </li>
-
-</body>
+        <br>
+        <div class="col-md-8 col-md-offset-2" style="margin-top: 30px">
+            <table id="output-table" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Power generated (in MW)</th>
+                        <th scope="col">Cost (in Rs)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>100 MW</td>
+                        <td>1000</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>200 MW</td>
+                        <td>2000</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>300 MW</td>
+                        <td>3000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
 </html>
