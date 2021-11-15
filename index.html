@@ -25,9 +25,9 @@
             <div class="form-group">
                 <label class="control-label col-md-3 col-md-offset-2" for="numberGenerators">Number of generators:</label>
                 <div class="col-md-4 input-group">
-                    <input id="number-generators-input" type="number" min="0" class="form-control" name="var_2" placeholder="&nbsp;0&nbsp;">
+                    <input id="number-generators-input" type="number" min="0" class="form-control" name="var_2" placeholder="&nbsp;3&nbsp;">
                     <div class="input-group-btn">
-                        <button class="btn btn-primary" type="button">Update</button>
+                        <button class="btn btn-primary" type="button" onclick="updateNumberOfGenerators()">Update</button>
                     </div>
                 </div>
             </div>
@@ -44,30 +44,30 @@
                             <th scope="col">Quadratic coefficient (c)</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="input-coeffs-table-body">
                         <tr>
                             <th scope="row">1</th>
-                            <td><input type="number" step="any" placeholder="10" class="form-control"></td>
-                            <td><input type="number" step="any" placeholder="100" class="form-control"></td>
-                            <td><input type="number" step="any" placeholder="20" class="form-control"></td>
-                            <td><input type="number" step="any" placeholder="3" class="form-control"></td>
-                            <td><input type="number" step="any" placeholder="0.001" class="form-control"></td>
+                            <td><input id="gen-1-min" type="number" step="any" placeholder="10" class="form-control"></td>
+                            <td><input id="gen-1-max" type="number" step="any" placeholder="100" class="form-control"></td>
+                            <td><input id="gen-1-coeff-1" type="number" step="any" placeholder="20" class="form-control"></td>
+                            <td><input id="gen-1-coeff-2" type="number" step="any" placeholder="3" class="form-control"></td>
+                            <td><input id="gen-1-coeff-3" type="number" step="any" placeholder="0.001" class="form-control"></td>
                         </tr>
                         <tr>
-                            <th scope="row">1</th>
-                            <td><input type="number" step="any" placeholder="10" class="form-control"></td>
-                            <td><input type="number" step="any" placeholder="100" class="form-control"></td>
-                            <td><input type="number" step="any" placeholder="20" class="form-control"></td>
-                            <td><input type="number" step="any" placeholder="3" class="form-control"></td>
-                            <td><input type="number" step="any" placeholder="0.001" class="form-control"></td>
+                            <th scope="row">2</th>
+                            <td><input id="gen-2-min" type="number" step="any" placeholder="10" class="form-control"></td>
+                            <td><input id="gen-2-max" type="number" step="any" placeholder="100" class="form-control"></td>
+                            <td><input id="gen-2-coeff-1" type="number" step="any" placeholder="20" class="form-control"></td>
+                            <td><input id="gen-2-coeff-2" type="number" step="any" placeholder="3" class="form-control"></td>
+                            <td><input id="gen-2-coeff-3" type="number" step="any" placeholder="0.001" class="form-control"></td>
                         </tr>
                         <tr>
-                            <th scope="row">1</th>
-                            <td><input type="number" step="any" placeholder="10" class="form-control"></td>
-                            <td><input type="number" step="any" placeholder="100" class="form-control"></td>
-                            <td><input type="number" step="any" placeholder="20" class="form-control"></td>
-                            <td><input type="number" step="any" placeholder="3" class="form-control"></td>
-                            <td><input type="number" step="any" placeholder="0.001" class="form-control"></td>
+                            <th scope="row">3</th>
+                            <td><input id="gen-3-min" type="number" step="any" placeholder="10" class="form-control"></td>
+                            <td><input id="gen-3-max" type="number" step="any" placeholder="100" class="form-control"></td>
+                            <td><input id="gen-3-coeff-1" type="number" step="any" placeholder="20" class="form-control"></td>
+                            <td><input id="gen-3-coeff-2" type="number" step="any" placeholder="3" class="form-control"></td>
+                            <td><input id="gen-3-coeff-3" type="number" step="any" placeholder="0.001" class="form-control"></td>
                         </tr>
                     </tbody>
                 </table>                        
@@ -82,16 +82,17 @@
         </div>
 
         <br>
-        <div class="col-md-8 col-md-offset-2" style="margin-top: 30px">
-            <table id="output-table" class="table">
+        <div class="col-md-8 col-md-offset-2" style="margin-top: 30px; ">
+            <table id="output-table" class="table" style="visibility: hidden;">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Power generated (in MW)</th>
-                        <th scope="col">Cost (in Rs)</th>
+                        <th scope="col">Optimal Units generated (in MW)</th>
+                        <th scope="col">Cost with Optimal Dispatch (in Rs)</th>
+                        <th scope="col">Cost with Equal Generation (in Rs)</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="output-table-body">
                     <tr>
                         <th scope="row">1</th>
                         <td>100 MW</td>
