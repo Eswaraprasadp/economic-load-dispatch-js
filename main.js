@@ -17,7 +17,7 @@ function getInitialLambda(powerDemand, D, coeffs, limits) {
 
 function economicLoadDispatch(powerDemand, D, coeffs, limits) {
     let lambda = getInitialLambda(powerDemand, D, coeffs, limits);
-    let eps = 0.001;
+    let eps = 0.01;
     let dP = Infinity;
     let optimalUnits = Array(D).fill(0);
     const maxItrCount = 100;
